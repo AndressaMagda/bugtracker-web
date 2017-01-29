@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template_principal.xhtml">
+
+	<ui:define name="corpo">
+		<t:saveState value="#{bugBean.bugs}" />
+
+		<h1>Listagem de Bugs</h1>
+
+		<h:form id="form">
+			<div class="acoes-principais">
+				<h:commandLink value="Novo" action="novo">
+					<f:ajax render="@form"/>
+				</h:commandLink>
+				&#160;
+				<h:commandButton value="Listar" action="#{bugBean.lista}">
+					<f:ajax render="@form" />
+				</h:commandButton>
+			</div>
+
+			<h:dataTable value="#{bugBean.bugs}" var="bug" styleClass="dados"
+				rowClasses="impar, par">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+						#{bug.id}
+					</h:column>
+
+				<h:column>
+					<f:facet name="header">Sumário</f:facet>
+						#{bug.sumario}
+					</h:column>
+
+				<h:column>
+					<f:facet name="header">Status</f:facet>
+						#{bug.status}
+					</h:column>
+
+				<h:column>
+					<f:facet name="header">Responsável</f:facet>
+						#{bug.responsavel.nome}
+					</h:column>
+
+				<h:column>
+					<f:facet name="header">Reportado em</f:facet>
+					<h:outputText value="#{bug.criadoEm}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<h:commandLink value="remover" action="#{bugBean.remove(bug)}"
+						onclick="return confirm('Deseja realmente remover este bug?');">
+						<f:ajax render="@form" />
+					</h:commandLink>
+							&#160;
+						<h:commandLink value="alterar" action="edita">
+						<p:ajax update="@form" />
+						<f:setPropertyActionListener value="#{bug}" target="#{bugBean.bug}" />
+					</h:commandLink>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>
