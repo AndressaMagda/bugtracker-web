@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/template_principal.xhtml">
+	<ui:define name="corpo">
+		<h1>Dashboard</h1>
+		
+		<h:dataTable value="#{dashboardBean.bugs}" var="bug" styleClass="dados" rowClasses="impar, par">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				#{bug.id}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Sumário</f:facet>
+				<h:link value="#{bug.sumario}" outcome="bug/edita">
+					<f:param name="id" value="#{bug.id}" />
+				</h:link>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Status</f:facet>
+				#{bug.status}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Reportado em</f:facet>
+				<h:outputText value="#{bug.criadoEm}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+		
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+
+</html>

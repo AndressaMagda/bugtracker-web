@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template_principal.xhtml">
+	<ui:define name="corpo">
+		
+		<f:metadata>
+			<f:viewParam name="id" value="#{bugBean.bug.id}" />
+			<f:viewAction action="#{bugBean.carrega}" />
+		</f:metadata>
+	
+		<t:saveState value="#{bugBean.bug}" />
+
+		<h1>Edição de Bugs</h1>
+
+		<h:form id="form">
+			<h:outputLabel value="Sumário" for="sumario" />
+			<h:inputText id="sumario" styleClass="texto-longo" label="Sumário"
+				value="#{bugBean.bug.sumario}" required="true" />
+
+			<h:outputLabel value="Descrição" for="descricao" />
+			<h:inputTextarea id="descricao" rows="3" styleClass="texto-longo"
+				label="Descrição" value="#{bugBean.bug.descricao}" required="true">
+				<f:validateLength maximum="1000" />
+			</h:inputTextarea>
+
+			<h:outputLabel value="Status" for="status" />
+			<h:selectOneRadio id="status" label="Status"
+				value="#{bugBean.bug.status}" required="true">
+				<f:selectItems value="#{bugBean.todosOsStatus}" var="status"
+					itemLabel="#{status}" itemValue="#{status}" />
+			</h:selectOneRadio>
+
+			<h:outputLabel value="Responsável" for="responsavel" />
+			<h:selectOneMenu value="#{bugBean.bug.responsavel}" required="true">
+				<f:selectItem itemLabel="Selecione um usuário" noSelectionOption="true" />
+				<f:selectItems value="#{bugBean.usuarios}" var="u"
+					itemLabel="#{u.nome}" itemValue="#{u}" />
+			</h:selectOneMenu>
+
+			<h:outputLabel value="Reportado em" for="criadoEm" />
+			<p:calendar id="criadoEm" value="#{bugBean.bug.criadoEm}" pattern="dd/MM/yyyy" 
+				mask="true" label="Reportado em" required="true" />
+
+			<div class="acoes-principais">
+				<h:commandLink value="Voltar" action="lista" immediate="true">
+					<f:ajax execute="@this" />
+				</h:commandLink>
+				&#160;
+				<h:commandButton value="Salvar" action="#{bugBean.altera}">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

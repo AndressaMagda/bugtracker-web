@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<ui:composition template="/templates/template_principal.xhtml">
+		<ui:define name="cabecalho"></ui:define>
+	
+		<ui:define name="corpo">
+			<fieldset id="login-form">
+				<legend>Acesse o Sistema</legend>
+				<h:form id="form">
+					<h:outputLabel value="Login" for="login"/>
+					<h:inputText id="login" label="Login" value="#{loginBean.login}" 
+					 	pt:placeholder="Login" required="true"/>
+					
+					<h:outputLabel value="Senha" for="senha" />
+					<h:inputSecret id="senha" label="Senha" value="#{loginBean.senha}" pt:placeholder="Senha"/>
+					
+					<div class="acoes-principais">
+						<h:commandButton value="Logar" action="#{loginBean.logar}" />
+					</div>
+				</h:form>
+			</fieldset>
+		</ui:define>
+
+	</ui:composition>
+	
+</html>
